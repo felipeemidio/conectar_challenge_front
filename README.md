@@ -1,16 +1,53 @@
-# conectar_challenge_front
+# CONECTAR CHALLENGE FRONT - Flutte Web
 
-A new Flutter project.
+Tech:
+- Flutter
+- dio
+- flutter_secure_storage
+- flutter_modular
+- ValueNotifier (Gerenciamento de estado)
 
-## Getting Started
+## Architecture
 
-This project is a starting point for a Flutter application.
+Arquitetura baseada no Clean architecture da Flutterando (para saber mais [clicar aqui](https://github.com/Flutterando/Clean-Dart)).
 
-A few resources to get you started if this is your first Flutter project:
+Foram removidos os **usecases** para simplificação.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Arquitetura modular usando o pacote *flutter_modular* que também traz funções de navegação e injeção de dependência.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Todos os módulos estão na pasta `modules` e se dividem nos seguintes conceitos:
+
+- **Presenters**: Widgets e os controller (classes para gerenciar os estados)
+- **Entities**: Classes para carregar as informações pelo app.
+- **Repositories**: Fazem as transformações dos dados e as chamadas de rotas pelo Datasource
+- **Serviços**: Como os repositórios mas usam Drivers no lugar dos Datasources.
+- **Datasources**: Fontes de consulta, no caso deste projeto é apenas a API feita ne Nest.JS.
+- **Drivers**: Interface para abstração de pacotes e outros acessos externos.
+
+A pasta `core` guarda tudo aquilo que é compartilhado pela aplicação, neste caso, constantes e classes de utilidades;
+
+Há um módulo especial chamado `shared` que carrega todos as dependências basicas da aplicação.
+
+# Configurações
+
+Clonar o repositório
+
+```bash
+$ git clone https://github.com/felipeemidio/conectar_challenge_front.git
+```
+
+Instalar dependências
+
+```bash
+$ flutter pub get
+```
+
+Este projeto depende da [API](https://github.com/felipeemidio/conectar_challenge_back), para alterar a urlBase vá para o arquivo `/lib/modules/shared/external/datasources/api_datasource.dart` e alterer a propriedade `baseUrl` que está com o valor estático.
+
+
+
+# Executando
+
+```bash
+$ flutter run --d chrome --web-browser-flag --disable-web-security
+```
